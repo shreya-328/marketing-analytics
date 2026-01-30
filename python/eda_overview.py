@@ -33,3 +33,16 @@ print(
 print("Impressions = 0 : ", (df["impressions"]==0).sum())
 print("Conversions NULL : ",df["conversions"].isna().sum())
 print("Conversion flag sum : ",df["conversion_missing_flag"].sum())
+
+print(df["platform"].value_counts())
+
+print(df["device"].value_counts())
+print(df["campaign_type"].value_counts())
+print(df["industry"].value_counts())
+print(df["campaign_name"].nunique())
+print(df["campaign_name"].head(10))
+
+
+print(df["date"].head())
+df["date"] = pd.to_datetime(df["date"])
+print(df["date"].head())
