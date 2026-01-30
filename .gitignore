@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Data outputs
+data/processed/
+
+# OS
+.DS_Store
+
+# Env files
+.env
+
+# Notebooks (if any later)
+.ipynb_checkpoints/
