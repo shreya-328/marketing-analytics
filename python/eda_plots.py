@@ -1,0 +1,13 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("data/raw/raw_ads_performance_dirty.csv")
+
+df = df[df["impressions"] != 0]
+df["conversions"] = df["conversions"].fillna(0)
+
+plt.hist(df["impressions"], bins=30)
+plt.title("Distribution of Impressions")
+plt.xlabel("Impressions")
+plt.ylabel("Frequency")
+plt.show()
