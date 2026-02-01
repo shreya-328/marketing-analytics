@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 df = pd.read_csv("data/raw/raw_ads_performance_dirty.csv")
 
@@ -30,4 +32,16 @@ plt.scatter(df["cost"], df["revenue"], alpha=0.5)
 plt.title("Cost vs Revenue")
 plt.xlabel("Cost")
 plt.ylabel("Revenue")
+plt.show()
+
+df["roas"] = np.where(
+    (df["revenue"].notna()) & (df["cost"] > 0),
+    df["revenue"] / df["cost"],
+    np.nan
+)
+
+# ROAS distribution
+plt.boxplot(df["roas"].dropna())
+plt.title("ROAS Distribution")
+plt.ylabel("ROAS")
 plt.show()
