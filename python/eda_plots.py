@@ -24,3 +24,10 @@ plt.xlabel("Clicks")
 plt.ylabel("Conversions")
 plt.title("Clicks vs Conversions")
 plt.show()
+
+# Cost vs Revenue scatter plot
+plt.scatter(df["cost"], df["revenue"], alpha=0.5)
+plt.title("Cost vs Revenue")
+plt.xlabel("Cost")
+plt.ylabel("Revenue")
+plt.show()
