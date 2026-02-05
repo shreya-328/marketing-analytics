@@ -46,7 +46,7 @@ plt.title("ROAS Distribution")
 plt.ylabel("ROAS")
 plt.show()
 
-#Performance wise ROAS
+# Performance wise ROAS
 df.boxplot(column="roas", by="platform")
 plt.title("ROAS by Platform")
 plt.suptitle("")
