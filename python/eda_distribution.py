@@ -14,10 +14,21 @@ df["ROAS"] = df["revenue"] / df["cost"]
 df = df[df["cost"] > 0]   # safety check
 
 # Boxplot: Campaign Type vs ROAS
+print("ROAS rows:", df["ROAS"].notna().sum())
+print(df[["device", "ROAS"]].head())
+
 plt.figure()
 df.boxplot(column="ROAS", by="campaign_type")
 plt.title("ROAS by Campaign Type")
 plt.suptitle("")  # default title remove
 plt.xlabel("Campaign Type")
+plt.ylabel("ROAS")
+plt.show()
+
+plt.figure()
+df.boxplot(column="ROAS", by="device")
+plt.title("ROAS by Device")
+plt.suptitle("")
+plt.xlabel("Device")
 plt.ylabel("ROAS")
 plt.show()
