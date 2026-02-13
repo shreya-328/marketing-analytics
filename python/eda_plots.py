@@ -30,7 +30,7 @@ plt.show()
 # Cost vs Revenue scatter plot
 plt.scatter(df["cost"], df["revenue"], alpha=0.5)
 plt.title("Cost vs Revenue")
-plt.xlabel("Cost")
+plt.xlabel("Cost")  
 plt.ylabel("Revenue")
 plt.show()
 
