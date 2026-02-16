@@ -21,6 +21,24 @@ dim_platform["platform_id"] = dim_platform.index +1
 
 #reordering columns
 dim_platforms = dim_platform[["platform_id","platform"]]
-
-
 print(platforms)
+
+
+# FOR device
+df["device"] = df["device"].str.strip().str.title()
+
+# extraction
+devices = df["device"].drop_duplicates()
+
+#sorting
+devices = devices.sort_values().reset_index(drop=True)
+
+#convert to dataframe
+dim_device = devices.to_frame()
+
+#assing surrogate ids
+dim_device["device_id"]=dim_device.index + 1
+
+#reordering columns 
+dim_device = dim_device[["device_id","device"]]
+print(dim_device)
