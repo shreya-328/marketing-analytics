@@ -42,3 +42,61 @@ dim_device["device_id"]=dim_device.index + 1
 #reordering columns 
 dim_device = dim_device[["device_id","device"]]
 print(dim_device)
+
+# dim_campaign
+df["campaign_name"] = df["campaign_name"].str.strip().str.title()
+df["campaign_type"] = df["campaign_type"].str.strip().str.title()
+df["industry"] = df["industry"].str.strip().str.title()
+
+# removing duplicates
+campaigns = df[["campaign_name", "campaign_type", "industry"]].drop_duplicates()
+
+print(campaigns.head())
+print("Total unique campaigns:", len(campaigns))
+
+campaigns = campaigns.sort_values(
+    by=["campaign_name", "campaign_type", "industry"]
+).reset_index(drop=True)
+
+print(campaigns.head())
+
+#sorting
+
+campaigns = campaigns.sort_values(
+    by=["campaign_name", "campaign_type", "industry"]
+).reset_index(drop=True)
+
+print(campaigns.head())
+
+#assigning campaign id
+dim_campaign = campaigns.copy()
+
+dim_campaign["campaign_id"] = dim_campaign.index + 1
+
+# Reorder columns (ID first)
+dim_campaign = dim_campaign[
+    ["campaign_id", "campaign_name", "campaign_type", "industry"]
+]
+
+print(dim_campaign.head())
+print("Total campaigns in dimension:", len(dim_campaign))
+
+# creating dim_date 
+# identifying the min and max date
+print("Min date: ",df["date"].min())
+print("Max date: ",df["date"].max())
+
+# creting a full date range
+
+# Ensure date column is datetime (safety)
+df["date"] = pd.to_datetime(df["date"])
+
+# Create full date range
+date_range = pd.date_range(
+    start=df["date"].min(),
+    end=df["date"].max(),
+    freq="D"
+)
+
+print("Total days in calendar:", len(date_range))
+print(date_range[:5])
