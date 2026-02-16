@@ -82,6 +82,7 @@ print(dim_campaign.head())
 print("Total campaigns in dimension:", len(dim_campaign))
 
 # creating dim_date 
+
 # identifying the min and max date
 print("Min date: ",df["date"].min())
 print("Max date: ",df["date"].max())
@@ -100,3 +101,98 @@ date_range = pd.date_range(
 
 print("Total days in calendar:", len(date_range))
 print(date_range[:5])
+
+#converting date_range into a dataframe and generating attrbutes
+
+# Convert to dataframe
+dim_date = pd.DataFrame({"full_date": date_range})
+
+# Generate attributes
+dim_date["year"] = dim_date["full_date"].dt.year
+dim_date["month"] = dim_date["full_date"].dt.month
+dim_date["month_name"] = dim_date["full_date"].dt.month_name()
+dim_date["quarter"] = dim_date["full_date"].dt.quarter
+dim_date["day"] = dim_date["full_date"].dt.day
+dim_date["day_name"] = dim_date["full_date"].dt.day_name()
+dim_date["week"] = dim_date["full_date"].dt.isocalendar().week
+
+# Assign stable date_id
+dim_date["date_id"] = dim_date.index + 1
+
+# Reorder columns
+dim_date = dim_date[
+    [
+        "date_id",
+        "full_date",
+        "year",
+        "month",
+        "month_name",
+        "quarter",
+        "day",
+        "day_name",
+        "week"
+    ]
+]
+
+print(dim_date.head())
+print("Total dates in dimension:", len(dim_date))
+
+# mergin platform for fact table
+
+fact_df = df.merge(
+    dim_platform,
+    on="platform",
+    how="left"
+)
+
+print(fact_df.head())
+print("Null platform_id:", fact_df["platform_id"].isna().sum())
+
+#merging dim_device
+fact_df = fact_df.merge(
+    dim_device,
+    on="device",
+    how="left"
+)
+
+print(fact_df.head())
+print("Null device_id:", fact_df["device_id"].isna().sum())
+
+#merging dim_campaign
+fact_df = fact_df.merge(
+    dim_campaign,
+    on=["campaign_name", "campaign_type", "industry"],
+    how="left"
+)
+
+print(fact_df.head())
+print("Null campaign_id:", fact_df["campaign_id"].isna().sum())
+
+#merging dim_date
+fact_df = fact_df.merge(
+    dim_date,
+    left_on="date",
+    right_on="full_date",
+    how="left"
+)
+
+print("Null date_id:", fact_df["date_id"].isna().sum())
+print(fact_df.head())
+
+#building fact_ads_performance
+fact_ads_performance = fact_df[
+    [
+        "date_id",
+        "platform_id",
+        "device_id",
+        "campaign_id",
+        "impressions",
+        "clicks",
+        "cost",
+        "conversions",
+        "revenue"
+    ]
+]
+
+print(fact_ads_performance.head())
+print("Fact table rows:", len(fact_ads_performance))
