@@ -196,3 +196,23 @@ fact_ads_performance = fact_df[
 
 print(fact_ads_performance.head())
 print("Fact table rows:", len(fact_ads_performance))
+
+print(fact_ads_performance.isnull().sum())
+
+fact_ads_performance["conversions"] = fact_ads_performance["conversions"].fillna(0)
+fact_ads_performance["revenue"] = fact_ads_performance["revenue"].fillna(0)
+
+# Create output folder if not exists
+import os
+os.makedirs("output", exist_ok=True)
+
+# Export dimensions
+dim_platform.to_csv("output/dim_platform.csv", index=False)
+dim_device.to_csv("output/dim_device.csv", index=False)
+dim_campaign.to_csv("output/dim_campaign.csv", index=False)
+dim_date.to_csv("output/dim_date.csv", index=False)
+
+# Export fact table
+fact_ads_performance.to_csv("output/fact_ads_performance.csv", index=False)
+
+print("✅ All tables exported successfully.")
