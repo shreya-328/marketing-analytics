@@ -1,5 +1,5 @@
-# data sanity check
-#Is data loaded correctly? are totals matching expectations? is revenue null behaving properly?
+--data sanity check
+--Is data loaded correctly? are totals matching expectations? is revenue null behaving properly?
 
 SELECT 
     SUM(impressions) AS total_impressions,
@@ -10,7 +10,7 @@ SELECT
 FROM `marketing-analytica-project.marketing_analytics.fact_ads_performance`;
 
 
-#calculating overall performance efficiency
+-- calculating overall performance efficiency
 SELECT 
     SAFE_DIVIDE(SUM(clicks), SUM(impressions)) AS CTR,
     SAFE_DIVIDE(SUM(cost), SUM(clicks)) AS CPC,
@@ -18,7 +18,7 @@ SELECT
     SAFE_DIVIDE(SUM(revenue), SUM(cost)) AS ROAS
 FROM `marketing-analytica-project.marketing_analytics.fact_ads_performance`;
 
-#platform wise performance
+-- platform wise performance
 SELECT
     p.platform,
     
